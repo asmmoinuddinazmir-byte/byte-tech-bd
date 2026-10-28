@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Logo } from '@/components/ui/Logo';
 import { signIn } from '@/lib/actions/auth';
-import { Lock, Mail, ArrowRight } from 'lucide-react';
+import { Lock, Mail, ArrowRight, ShieldCheck, KeyRound } from 'lucide-react';
 import { toast } from 'sonner';
 
 function LoginForm() {
@@ -16,6 +16,11 @@ function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const fillAdmin = () => {
+    setEmail('admin@bytetechbd.com');
+    setPassword('ByteTechAdmin2026!');
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,7 +36,11 @@ function LoginForm() {
         toast.error(result.error);
       } else {
         toast.success('Signed in successfully!');
-        router.push(redirect);
+        if (result.isAdmin || email.toLowerCase().includes('admin')) {
+          router.push(redirect !== '/' ? redirect : '/admin');
+        } else {
+          router.push(redirect);
+        }
         router.refresh();
       }
     } catch (err) {
@@ -43,6 +52,27 @@ function LoginForm() {
 
   return (
     <div className="bg-white py-8 px-6 sm:px-10 rounded-2xl border border-slate-200 shadow-md">
+      {/* Demo Admin Quick Helper Box */}
+      <div className="mb-6 p-4 rounded-xl bg-teal-50 border border-teal-200/80">
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-1.5 text-xs font-bold text-teal-900">
+            <ShieldCheck size={16} className="text-teal-600" />
+            <span>Admin Demo Credentials</span>
+          </div>
+          <button
+            type="button"
+            onClick={fillAdmin}
+            className="text-[11px] font-bold text-teal-700 hover:text-teal-900 bg-white hover:bg-teal-100 border border-teal-300 px-2.5 py-1 rounded-md transition-colors"
+          >
+            Auto-fill
+          </button>
+        </div>
+        <div className="text-[11px] text-teal-800 space-y-0.5 font-mono">
+          <div><strong className="font-sans font-semibold text-teal-950">Email:</strong> admin@bytetechbd.com</div>
+          <div><strong className="font-sans font-semibold text-teal-950">Password:</strong> ByteTechAdmin2026!</div>
+        </div>
+      </div>
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
@@ -99,11 +129,17 @@ function LoginForm() {
         </button>
       </form>
 
-      <div className="mt-6 pt-6 border-t border-slate-100 text-center">
+      <div className="mt-6 pt-6 border-t border-slate-100 text-center space-y-2">
         <p className="text-xs text-slate-500">
           Don&apos;t have an account yet?{' '}
           <Link href={`/register?redirect=${encodeURIComponent(redirect)}`} className="text-teal-600 font-bold hover:underline">
             Create an Account
+          </Link>
+        </p>
+        <p className="text-xs text-slate-500">
+          Direct Admin Access:{' '}
+          <Link href="/admin" className="text-navy-900 font-bold hover:text-teal-600 hover:underline">
+            Go to Admin Dashboard &rarr;
           </Link>
         </p>
       </div>

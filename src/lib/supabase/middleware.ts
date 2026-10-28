@@ -42,8 +42,15 @@ export async function updateSession(request: NextRequest) {
       data: { user },
     } = await supabase.auth.getUser();
 
+    const adminSession = request.cookies.get('btb_admin_session')?.value;
+    const userSession = request.cookies.get('btb_user_session')?.value;
+
     // Protect admin routes
     if (request.nextUrl.pathname.startsWith('/admin')) {
+      if (adminSession === 'true') {
+        return supabaseResponse;
+      }
+
       if (!user) {
         const url = request.nextUrl.clone();
         url.pathname = '/login';
@@ -66,6 +73,10 @@ export async function updateSession(request: NextRequest) {
 
     // Protect account routes
     if (request.nextUrl.pathname.startsWith('/account')) {
+      if (userSession || adminSession === 'true') {
+        return supabaseResponse;
+      }
+
       if (!user) {
         const url = request.nextUrl.clone();
         url.pathname = '/login';
