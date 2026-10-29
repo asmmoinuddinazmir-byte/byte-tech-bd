@@ -133,6 +133,58 @@ export function SettingsClient({ initialSettings }: Props) {
               className="input-field text-sm"
             />
           </div>
+
+          <div>
+            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              Facebook Page URL
+            </label>
+            <input
+              type="url"
+              placeholder="https://facebook.com/yourpage"
+              value={settings.facebook_url || 'https://facebook.com/bytetechbd'}
+              onChange={(e) => handleChange('facebook_url', e.target.value)}
+              className="input-field text-sm"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              Instagram Profile URL
+            </label>
+            <input
+              type="url"
+              placeholder="https://instagram.com/yourprofile"
+              value={settings.instagram_url || 'https://instagram.com/bytetechbd'}
+              onChange={(e) => handleChange('instagram_url', e.target.value)}
+              className="input-field text-sm"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              WhatsApp Hotline Number
+            </label>
+            <input
+              type="text"
+              placeholder="+880 1700-000000"
+              value={settings.whatsapp_number || '+880 1700-000000'}
+              onChange={(e) => handleChange('whatsapp_number', e.target.value)}
+              className="input-field text-sm font-mono"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              Google Maps Location Link
+            </label>
+            <input
+              type="url"
+              placeholder="https://maps.google.com/..."
+              value={settings.maps_url || 'https://maps.google.com'}
+              onChange={(e) => handleChange('maps_url', e.target.value)}
+              className="input-field text-sm"
+            />
+          </div>
         </div>
       </div>
 

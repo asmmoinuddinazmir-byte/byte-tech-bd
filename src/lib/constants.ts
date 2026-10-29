@@ -2,6 +2,18 @@ export const SITE_NAME = 'Byte Tech BD';
 export const SITE_DESCRIPTION = 'Your trusted source for laptops, desktop PCs, gaming PCs, components, and accessories in Bangladesh.';
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
+export const STORE_CONTACT = {
+  phone: '+880 1700-000000',
+  whatsapp: '+880 1700-000000',
+  email: 'info@bytetechbd.com',
+  address: 'Shop 402, Level 4, Multiplan Center, New Elephant Road, Dhaka-1205, Bangladesh',
+  facebook: 'https://facebook.com/bytetechbd',
+  instagram: 'https://instagram.com/bytetechbd',
+  youtube: 'https://youtube.com',
+  googleMaps: 'https://maps.google.com',
+  hours: 'Saturday – Thursday: 10:00 AM – 8:30 PM (Friday Closed)',
+};
+
 export const CURRENCY = 'BDT';
 export const CURRENCY_SYMBOL = '৳';
 
