@@ -1,6 +1,6 @@
 export const SITE_NAME = 'Byte Tech BD';
 export const SITE_DESCRIPTION = 'Your trusted source for laptops, desktop PCs, gaming PCs, components, and accessories in Bangladesh.';
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://bytetechbd.netlify.app';
 
 export const STORE_CONTACT = {
   phone: '+880 1700-000000',
