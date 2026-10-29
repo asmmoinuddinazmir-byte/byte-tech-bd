@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ShoppingCart, Check, Shield, BatteryMedium, Cpu } from 'lucide-react';
+import { ShoppingCart, Check, Shield, BatteryMedium, Cpu, Laptop } from 'lucide-react';
 import { formatPrice, getDiscountPercentage, getConditionBadgeColor, getConditionGradeColor } from '@/lib/utils';
 import { useCart } from '@/hooks/use-cart';
 import type { Product } from '@/lib/types';
@@ -15,6 +15,7 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   const addItem = useCart((s) => s.addItem);
   const [added, setAdded] = useState(false);
+  const [imgError, setImgError] = useState(false);
 
   const effectivePrice = product.discounted_price || product.price;
   const hasDiscount = product.discounted_price && product.discounted_price < product.price;
@@ -39,17 +40,25 @@ export function ProductCard({ product }: ProductCardProps) {
       <Link href={`/product/${product.slug}`} className="flex flex-col flex-1">
         {/* Product Visual Container */}
         <div className="relative aspect-[4/3] bg-gradient-to-tr from-slate-100 to-slate-50 flex items-center justify-center p-4 overflow-hidden border-b border-slate-100">
-          {imageUrl ? (
+          {imageUrl && !imgError ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={imageUrl}
               alt={product.name}
+              onError={() => setImgError(true)}
               className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
             />
           ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center text-slate-400">
-              <Cpu size={48} className="text-teal-600/40 group-hover:scale-110 transition-transform mb-2" />
-              <span className="text-[11px] font-mono font-medium text-slate-400">Byte Tech BD</span>
+            <div className="w-full h-full flex flex-col items-center justify-center text-slate-400 p-4 text-center">
+              <div className="w-14 h-14 rounded-2xl bg-teal-500/10 text-teal-600 flex items-center justify-center mb-2 shadow-xs group-hover:scale-110 transition-transform">
+                {product.condition === 'used' || product.category?.slug?.includes('laptop') ? (
+                  <Laptop size={28} />
+                ) : (
+                  <Cpu size={28} />
+                )}
+              </div>
+              <span className="text-xs font-bold text-navy-950 line-clamp-1">{product.name}</span>
+              <span className="text-[10px] font-mono text-teal-600 font-semibold mt-0.5">Byte Tech BD</span>
             </div>
           )}
 

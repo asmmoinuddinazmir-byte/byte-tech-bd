@@ -196,7 +196,7 @@ export const DEMO_PRODUCTS: Product[] = [
     category: DEMO_CATEGORIES[1],
     brand: DEMO_BRANDS[1],
     images: [
-      { id: 'img-3', product_id: 'prod-3', url: 'https://images.unsplash.com/photo-1544731612-de2f9605b7ec?auto=format&fit=crop&w=800&q=80', alt_text: 'HP EliteBook 840 G6', sort_order: 0, is_primary: true, created_at: '' }
+      { id: 'img-3', product_id: 'prod-3', url: 'https://images.unsplash.com/photo-1589561084283-930aa7b1ce50?auto=format&fit=crop&w=800&q=80', alt_text: 'HP EliteBook 840 G6', sort_order: 0, is_primary: true, created_at: '' }
     ],
     specifications: [
       { id: 'sp-20', product_id: 'prod-3', spec_key: 'Processor', spec_value: 'Intel Core i5-8365U vPro (1.6 GHz up to 4.1 GHz)', sort_order: 1 },

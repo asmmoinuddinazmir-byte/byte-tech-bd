@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
   ShoppingCart, Zap, Shield, Check, Truck, 
-  RotateCcw, BatteryCharging, Minus, Plus, Heart, Share2, CheckCircle2
+  RotateCcw, BatteryCharging, Minus, Plus, Heart, Share2, CheckCircle2, Laptop 
 } from 'lucide-react';
 import { formatPrice, getDiscountPercentage, getConditionBadgeColor } from '@/lib/utils';
 import { useCart } from '@/hooks/use-cart';
@@ -19,6 +19,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
   const router = useRouter();
   const addItem = useCart((s) => s.addItem);
   const [quantity, setQuantity] = useState(1);
+  const [imgError, setImgError] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string>(
     product.images?.[0]?.url || 'https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=800&q=80'
   );
@@ -49,12 +50,23 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
       <div className="lg:col-span-5 space-y-4">
         {/* Main Display Image */}
         <div className="relative aspect-[4/3] rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center p-6 overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={selectedImage}
-            alt={product.name}
-            className="w-full h-full object-contain hover:scale-105 transition-transform duration-300"
-          />
+          {selectedImage && !imgError ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={selectedImage}
+              alt={product.name}
+              onError={() => setImgError(true)}
+              className="w-full h-full object-contain hover:scale-105 transition-transform duration-300"
+            />
+          ) : (
+            <div className="w-full h-full flex flex-col items-center justify-center text-slate-400 p-6 text-center">
+              <div className="w-20 h-20 rounded-2xl bg-teal-500/10 text-teal-600 flex items-center justify-center mb-3">
+                <Laptop size={40} />
+              </div>
+              <span className="text-sm font-bold text-navy-950">{product.name}</span>
+              <span className="text-xs font-mono text-teal-600 font-semibold mt-1">Byte Tech BD Verified</span>
+            </div>
+          )}
 
           <div className="absolute top-3 left-3 flex flex-col gap-1.5 z-10">
             <span className={`badge ${getConditionBadgeColor(product.condition)} shadow-sm`}>
